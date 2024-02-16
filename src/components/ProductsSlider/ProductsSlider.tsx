@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import "./ProductsSlider.scss";
-import arrowLeft from "../../icons/arrow-left.svg";
-import arrowRight from "../../icons/arrow-right.svg";
-import { ProductCard } from "../ProductCard";
-import { Product } from "../../types/Product";
-import { Loader } from "../Loader";
+/* eslint-disable max-len */
+import React, { useState } from 'react';
+import './ProductsSlider.scss';
+import arrowLeft from '../../icons/arrow-left.svg';
+import arrowRight from '../../icons/arrow-right.svg';
+import { ProductCard } from '../ProductCard';
+import { Product } from '../../types/Product';
+import { Loader } from '../Loader';
 
 interface Props {
   products: Product[];
@@ -26,9 +27,7 @@ export const ProductsSlider: React.FC<Props> = ({
   };
 
   const handleNextClick = () => {
-    setSlideIndex((prevIndex) =>
-      Math.min(prevIndex + 1, Math.ceil(products.length / 4) - 1),
-    );
+    setSlideIndex((prevIndex) => Math.min(prevIndex + 1, Math.ceil(products.length / 4) - 1));
   };
 
   return (

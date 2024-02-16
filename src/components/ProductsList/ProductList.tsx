@@ -1,7 +1,7 @@
-import React from "react";
-import "./ProductList.scss";
-import { Product } from "../../types/Product";
-import { ProductCard } from "../ProductCard";
+import React from 'react';
+import './ProductList.scss';
+import { Product } from '../../types/Product';
+import { ProductCard } from '../ProductCard';
 
 interface Props {
   products: Product[];

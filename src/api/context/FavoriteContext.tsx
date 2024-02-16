@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from "react";
-import { Product } from "../../types/Product";
-import { useLocalStorage } from "../../helpers/useLocalStorage";
+import React, { useMemo } from 'react';
+import { Product } from '../../types/Product';
+import { useLocalStorage } from '../../helpers/useLocalStorage';
 
 type State = {
   favProducts: Product[];
@@ -21,7 +21,7 @@ interface Props {
 
 export const FavoriteProvider: React.FC<Props> = ({ children }) => {
   const [favProducts, setFavProducts] = useLocalStorage<Product[]>(
-    "favorites",
+    'favorites',
     [],
   );
 

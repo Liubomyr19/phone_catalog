@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import React from "react";
-import "./Categories.scss";
-import phones from "../../photo/category-phones.png";
-import tablets from "../../photo/category-tablets.png";
-import accessories from "../../photo/category-accessories.png";
-import { Product } from "../../types/Product";
+import { Link } from 'react-router-dom';
+import React from 'react';
+import './Categories.scss';
+import phones from '../../photo/category-phones.png';
+import tablets from '../../photo/category-tablets.png';
+import accessories from '../../photo/category-accessories.png';
+import { Product } from '../../types/Product';
 
 interface Props {
   products: Product[];
@@ -30,7 +30,7 @@ export const Categories: React.FC<Props> = ({ products }) => {
           </div>
           <p className="categories__item--title">Mobile phones</p>
           <span className="categories__item--amount">
-            {`${categoryAmount("phones")} models`}
+            {`${categoryAmount('phones')} models`}
           </span>
         </Link>
         <Link className="categories__item" to="/tablets">
@@ -43,7 +43,7 @@ export const Categories: React.FC<Props> = ({ products }) => {
           </div>
           <p className="categories__item--title">Tablets</p>
           <span className="categories__item--amount">
-            {`${categoryAmount("tablets")} models`}
+            {`${categoryAmount('tablets')} models`}
           </span>
         </Link>
         <Link className="categories__item" to="/accessories">
@@ -57,7 +57,7 @@ export const Categories: React.FC<Props> = ({ products }) => {
           </div>
           <p className="categories__item--title">Accessories</p>
           <span className="categories__item--amount">
-            {`${categoryAmount("accessories")} models`}
+            {`${categoryAmount('accessories')} models`}
           </span>
         </Link>
       </div>

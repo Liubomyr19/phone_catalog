@@ -1,19 +1,20 @@
-/* eslint-disable prettier/prettier */
-import React from "react";
-import { Link } from "react-router-dom";
-import "./ProductCard.scss";
-import { Product } from "../../types/Product";
-import { ButtonFavorites } from "../ButtonFavorites";
-import { ButtonAddCard } from "../ButtonAddCard";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './ProductCard.scss';
+import { Product } from '../../types/Product';
+import { ButtonFavorites } from '../ButtonFavorites';
+import { ButtonAddCard } from '../ButtonAddCard';
 
 interface Props {
   product: Product;
 }
 
-const BASE_URL = "https://mate-academy.github.io/react_phone-catalog/_new/";
+const BASE_URL = 'https://mate-academy.github.io/react_phone-catalog/_new/';
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-  const { phoneId, name, price, fullPrice, screen, capacity, ram, image }
+  const {
+    phoneId, name, price, fullPrice, screen, capacity, ram, image,
+  }
     = product;
 
   return (

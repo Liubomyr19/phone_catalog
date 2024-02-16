@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import classNames from "classnames";
-import "./SearchField.scss";
-import { useLocation, useSearchParams } from "react-router-dom";
-import debounce from "lodash.debounce";
-import { getSearchWith } from "../../helpers/SearchHelper";
+import React, { useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import './SearchField.scss';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import debounce from 'lodash.debounce';
+import { getSearchWith } from '../../helpers/SearchHelper';
 
 export const SearchField: React.FC = () => {
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("query" || "");
+  const query = searchParams.get('query' || '');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [appliedQuery, setAppliedQuery] = useState<string>(query || "");
+  const [appliedQuery, setAppliedQuery] = useState<string>(query || '');
   const titleField = useRef<HTMLInputElement>(null);
   const firstRender = useRef(true);
 
@@ -27,7 +27,7 @@ export const SearchField: React.FC = () => {
       return;
     }
 
-    setAppliedQuery("");
+    setAppliedQuery('');
   }, [pathname]);
 
   const applyQuery = debounce((newQuery: string) => {
@@ -47,7 +47,7 @@ export const SearchField: React.FC = () => {
   };
 
   const clearSearch = () => {
-    setAppliedQuery("");
+    setAppliedQuery('');
     setSearchParams(getSearchWith({ query: null }, searchParams));
   };
 
@@ -56,7 +56,7 @@ export const SearchField: React.FC = () => {
       <input
         type="text"
         id="search"
-        className={classNames("searchField__input", { focus: isSearchFocused })}
+        className={classNames('searchField__input', { focus: isSearchFocused })}
         placeholder={`Search in ${pathname.slice(1)} ...`}
         autoComplete="off"
         ref={titleField}

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { ProductsSlider } from "../../components/ProductsSlider";
-import { Slider } from "../../components/Slider/Slider";
-import { Product } from "../../types/Product";
-import { getProducts } from "../../api/productsApi";
-import { Categories } from "../../components/Categories";
+import { useState, useEffect } from 'react';
+import { ProductsSlider } from '../../components/ProductsSlider';
+import { Slider } from '../../components/Slider/Slider';
+import { Product } from '../../types/Product';
+import { getProducts } from '../../api/productsApi';
+import { Categories } from '../../components/Categories';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);

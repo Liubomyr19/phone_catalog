@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { useContext, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import "./CardPage.scss";
-import { CardContext } from "../../api/context/CardContext";
-import { BackButton } from "../../components/BackButton";
-import { CardEmpty } from "../../components/CardEmpty";
-import { CommingSoon } from "../../components/CommingSoon";
+import { useContext, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import './CardPage.scss';
+import { CardContext } from '../../api/context/CardContext';
+import { BackButton } from '../../components/BackButton';
+import { CardEmpty } from '../../components/CardEmpty';
+import { CommingSoon } from '../../components/CommingSoon';
 
-const BASE_URL = "https://mate-academy.github.io/react_phone-catalog/_new/";
+const BASE_URL = 'https://mate-academy.github.io/react_phone-catalog/_new/';
 
 export const CardPage = () => {
   const {
@@ -107,7 +107,7 @@ export const CardPage = () => {
 
               <p className="cardPage__checkout--total-item">
                 {cardProducts.length === 1
-                  ? "Total for 1 item"
+                  ? 'Total for 1 item'
                   : `Total for ${cardProducts.length} items`}
               </p>
             </div>

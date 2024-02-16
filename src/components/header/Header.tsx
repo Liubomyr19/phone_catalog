@@ -1,28 +1,27 @@
-/* eslint-disable prettier/prettier */
-import React, { useContext } from "react";
-import classNames from "classnames";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import "./header.scss";
-import logo from "../../icons/logo.svg";
-import { SearchField } from "../SearchField";
-import { FavoriteContext } from "../../api/context/FavoriteContext";
-import { CardContext } from "../../api/context/CardContext";
+import React, { useContext } from 'react';
+import classNames from 'classnames';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import './header.scss';
+import logo from '../../icons/logo.svg';
+import { SearchField } from '../SearchField';
+import { FavoriteContext } from '../../api/context/FavoriteContext';
+import { CardContext } from '../../api/context/CardContext';
 
 export const NavBar: React.FC = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => {
-    return classNames("nav__link", { "is-active": isActive });
+    return classNames('nav__link', { 'is-active': isActive });
   };
 
   const { favProducts } = useContext(FavoriteContext);
   const { cardProducts } = useContext(CardContext);
   const { pathname } = useLocation();
   const isSearchShown
-    = pathname === "/phones"
-    || pathname === "/tablets"
-    || pathname === "/accessories"
-    || pathname === "/favorites";
+    = pathname === '/phones'
+    || pathname === '/tablets'
+    || pathname === '/accessories'
+    || pathname === '/favorites';
 
-  const isCartOpen = pathname !== "/card";
+  const isCartOpen = pathname !== '/card';
 
   return (
     <>

@@ -1,26 +1,26 @@
-import { client } from "../helpers/httpClient";
-import { Product } from "../types/Product";
-import { ProductDetails } from "../types/ProductDetails";
+import { client } from '../helpers/httpClient';
+import { Product } from '../types/Product';
+import { ProductDetails } from '../types/ProductDetails';
 
 export const getProducts = () => {
-  return client.get<Product[]>("products.json");
+  return client.get<Product[]>('products.json');
 };
 
 export const getPhones = () => {
   return getProducts().then((products: Product[]) => {
-    return [...products].filter((item) => item.category === "phones");
+    return [...products].filter((item) => item.category === 'phones');
   });
 };
 
 export const getTablets = () => {
   return getProducts().then((products: Product[]) => {
-    return [...products].filter((item) => item.category === "tablets");
+    return [...products].filter((item) => item.category === 'tablets');
   });
 };
 
 export const getAccessories = () => {
   return getProducts().then((products: Product[]) => {
-    return [...products].filter((item) => item.category === "accessories");
+    return [...products].filter((item) => item.category === 'accessories');
   });
 };
 

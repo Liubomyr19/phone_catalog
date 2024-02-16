@@ -1,21 +1,20 @@
-/* eslint-disable prettier/prettier */
-import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import classNames from "classnames";
-import { getProductDetails, getProducts } from "../../api/productsApi";
-import { ProductDetails } from "../../types/ProductDetails";
-import "./ProductDetailsPage.scss";
-import { Loader } from "../../components/Loader";
-import { BreadCrambs } from "../../components/BreadCrambs";
-import { PRODUCTS_COLORS } from "../../helpers/typesColor";
-import { Product } from "../../types/Product";
-import { ProductsSlider } from "../../components/ProductsSlider";
-import { BackButton } from "../../components/BackButton";
-import { ButtonFavorites } from "../../components/ButtonFavorites";
-import { ButtonAddCard } from "../../components/ButtonAddCard";
-import { NotFoundPage } from "../NotFoundPage";
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { getProductDetails, getProducts } from '../../api/productsApi';
+import { ProductDetails } from '../../types/ProductDetails';
+import './ProductDetailsPage.scss';
+import { Loader } from '../../components/Loader';
+import { BreadCrambs } from '../../components/BreadCrambs';
+import { PRODUCTS_COLORS } from '../../helpers/typesColor';
+import { Product } from '../../types/Product';
+import { ProductsSlider } from '../../components/ProductsSlider';
+import { BackButton } from '../../components/BackButton';
+import { ButtonFavorites } from '../../components/ButtonFavorites';
+import { ButtonAddCard } from '../../components/ButtonAddCard';
+import { NotFoundPage } from '../NotFoundPage';
 
-const BASE_URL = "https://mate-academy.github.io/react_phone-catalog/_new/";
+const BASE_URL = 'https://mate-academy.github.io/react_phone-catalog/_new/';
 
 const getProductById = (products: Product[], id: string) => {
   return products.find((product) => product.itemId === id);
@@ -27,7 +26,7 @@ export const ProductDetailsPage = () => {
   const [product, setProduct] = useState<ProductDetails | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [currentImg, setCurrentImg] = useState("");
+  const [currentImg, setCurrentImg] = useState('');
 
   useEffect(() => {
     if (productId) {
@@ -120,8 +119,8 @@ export const ProductDetailsPage = () => {
                   <div className="productDetails__images">
                     {images.map((image) => (
                       <button
-                        className={classNames("productDetails__images--btn", {
-                          "img-active": image === currentImg,
+                        className={classNames('productDetails__images--btn', {
+                          'img-active': image === currentImg,
                         })}
                         type="button"
                         key={image}
@@ -156,9 +155,9 @@ export const ProductDetailsPage = () => {
                         <li
                           key={colValue}
                           className={classNames(
-                            "productDetails__options--color",
+                            'productDetails__options--color',
                             {
-                              "color-active": color === colValue,
+                              'color-active': color === colValue,
                             },
                           )}
                         >
@@ -183,17 +182,17 @@ export const ProductDetailsPage = () => {
                         <li
                           key={capValue}
                           className={classNames(
-                            "productDetails__options--cap",
+                            'productDetails__options--cap',
                             {
-                              "cap-active": capacity === capValue,
+                              'cap-active': capacity === capValue,
                             },
                           )}
                         >
                           <Link
                             className={classNames(
-                              "productDetails__options--cap-link",
+                              'productDetails__options--cap-link',
                               {
-                                "cap-active": capacity === capValue,
+                                'cap-active': capacity === capValue,
                               },
                             )}
                             to={`/phones/${namespaceId}-${capValue.toLowerCase()}-${color}`}
@@ -360,7 +359,7 @@ export const ProductDetailsPage = () => {
                         Cell
                       </p>
                       <p className="productDetails__details--tech-value">
-                        {cell?.join(", ")}
+                        {cell?.join(', ')}
                       </p>
                     </div>
                   </div>

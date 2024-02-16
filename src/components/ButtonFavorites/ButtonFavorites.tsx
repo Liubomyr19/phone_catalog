@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useContext } from "react";
-import classNames from "classnames";
-import "./ButtonFavorites.scss";
-import { Product } from "../../types/Product";
-import { FavoriteContext } from "../../api/context/FavoriteContext";
+import React, { useContext } from 'react';
+import classNames from 'classnames';
+import './ButtonFavorites.scss';
+import { Product } from '../../types/Product';
+import { FavoriteContext } from '../../api/context/FavoriteContext';
 
 interface Props {
   product: Product;
@@ -25,9 +25,9 @@ export const ButtonFavorites: React.FC<Props> = ({ product }) => {
       }}
     >
       <div
-        className={classNames("icon", {
-          "icon--fav": !isProductFavorite,
-          "icon--fav-add": isProductFavorite,
+        className={classNames('icon', {
+          'icon--fav': !isProductFavorite,
+          'icon--fav-add': isProductFavorite,
         })}
       />
     </button>

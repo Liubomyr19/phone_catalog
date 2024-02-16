@@ -1,11 +1,11 @@
-import React, { useContext, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import "./FavoritesPage.scss";
-import { BreadCrambs } from "../../components/BreadCrambs";
-import { FavoriteContext } from "../../api/context/FavoriteContext";
-import { ProductList } from "../../components/ProductsList";
-import { CardEmpty } from "../../components/CardEmpty";
-import { Filter } from "../../helpers/Filters";
+import React, { useContext, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import './FavoritesPage.scss';
+import { BreadCrambs } from '../../components/BreadCrambs';
+import { FavoriteContext } from '../../api/context/FavoriteContext';
+import { ProductList } from '../../components/ProductsList';
+import { CardEmpty } from '../../components/CardEmpty';
+import { Filter } from '../../helpers/Filters';
 
 export const FavoritesPage: React.FC = () => {
   const { favProducts } = useContext(FavoriteContext);
@@ -21,7 +21,7 @@ export const FavoritesPage: React.FC = () => {
 
       <div className="favoritesPage__content">
         <p className="favoritesPage__amount">
-          {favProducts.length !== 1 ? `${favProducts.length} items` : "1 item"}
+          {favProducts.length !== 1 ? `${favProducts.length} items` : '1 item'}
         </p>
 
         {!favProducts.length ? (

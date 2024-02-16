@@ -1,11 +1,11 @@
-import { URLSearchParams } from "url";
-import { Product } from "../types/Product";
-import { SORT_BY } from "../types/FilterSort";
+import { URLSearchParams } from 'url';
+import { Product } from '../types/Product';
+import { SORT_BY } from '../types/FilterSort';
 
 export function Filter(products: Product[], searchParams: URLSearchParams) {
   let filteredProducts: Product[] = [...products];
-  const query = searchParams.get("query".trim().toLowerCase());
-  const sort = searchParams.get("sort");
+  const query = searchParams.get('query'.trim().toLowerCase());
+  const sort = searchParams.get('sort');
 
   filteredProducts = filteredProducts.sort((a, b) => {
     switch (sort) {

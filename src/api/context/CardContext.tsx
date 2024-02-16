@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from "react";
-import { Product } from "../../types/Product";
-import { useLocalStorage } from "../../helpers/useLocalStorage";
+import React, { useMemo } from 'react';
+import { Product } from '../../types/Product';
+import { useLocalStorage } from '../../helpers/useLocalStorage';
 
 interface State {
   cardProducts: Product[];
@@ -32,7 +32,7 @@ interface Props {
 
 export const CardProvider: React.FC<Props> = ({ children }) => {
   const [cardProducts, setCardProducts] = useLocalStorage<Product[]>(
-    "card",
+    'card',
     [],
   );
 

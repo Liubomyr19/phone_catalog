@@ -1,7 +1,7 @@
-import React from "react";
-import "./BreadCrambs.scss";
-import { Link, useLocation } from "react-router-dom";
-import { ProductDetails } from "../../types/ProductDetails";
+import React from 'react';
+import './BreadCrambs.scss';
+import { Link, useLocation } from 'react-router-dom';
+import { ProductDetails } from '../../types/ProductDetails';
 
 interface Props {
   product?: ProductDetails | null;
@@ -13,7 +13,7 @@ function capitalizeCategory(word: string) {
 
 export const BreadCrambs: React.FC<Props> = ({ product }) => {
   const { pathname } = useLocation();
-  const categoryName = pathname.slice(1).split("/")[0];
+  const categoryName = pathname.slice(1).split('/')[0];
 
   return (
     <div className="breadCrambs" data-cy="breadCrumbs">

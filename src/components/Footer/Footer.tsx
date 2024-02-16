@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import "./Footer.scss";
-import logo from "../../icons/logo.svg";
+import { Link } from 'react-router-dom';
+import './Footer.scss';
+import logo from '../../icons/logo.svg';
 
 export const Footer = () => {
   const goToTop = () => {

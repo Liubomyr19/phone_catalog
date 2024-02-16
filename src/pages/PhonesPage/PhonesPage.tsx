@@ -1,16 +1,15 @@
-/* eslint-disable prettier/prettier */
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import "./PhonesPage.scss";
-import { Product } from "../../types/Product";
-import { getPhones } from "../../api/productsApi";
-import { Loader } from "../../components/Loader";
-import { ProductList } from "../../components/ProductsList";
-import { Pagination } from "../../components/Pagination";
-import { SelectSortBy } from "../../components/SelectSortBy";
-import { Filter } from "../../helpers/Filters";
-import { SelectItems } from "../../components/SelectItems";
-import { BreadCrambs } from "../../components/BreadCrambs";
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import './PhonesPage.scss';
+import { Product } from '../../types/Product';
+import { getPhones } from '../../api/productsApi';
+import { Loader } from '../../components/Loader';
+import { ProductList } from '../../components/ProductsList';
+import { Pagination } from '../../components/Pagination';
+import { SelectSortBy } from '../../components/SelectSortBy';
+import { Filter } from '../../helpers/Filters';
+import { SelectItems } from '../../components/SelectItems';
+import { BreadCrambs } from '../../components/BreadCrambs';
 
 export const PhonesPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -21,8 +20,8 @@ export const PhonesPage: React.FC = () => {
     return Filter(products, searchParams);
   }, [products, searchParams]);
   const total = filteredProducts.length;
-  const currentPage = +(searchParams.get("page") || "1");
-  const perPage = +(searchParams.get("perPage") || "") || total;
+  const currentPage = +(searchParams.get('page') || '1');
+  const perPage = +(searchParams.get('perPage') || '') || total;
   const pagesAmount = Math.ceil(total / perPage);
   // const query = searchParams.get('query' || '');
   const firstItem = currentPage * +perPage - perPage;
