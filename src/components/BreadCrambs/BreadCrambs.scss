@@ -1,22 +1,41 @@
-@import "../../utils/main";
+@import '../../utils/variables.scss';
+@import '../../utils/mixins.scss';
 
-.breadCrambs {
+.breadcrumbs {
   display: flex;
   align-items: center;
   gap: 8px;
-
-  @extend %small-text;
-
-  color: $gray-secondary-color;
   margin-top: 24px;
 
-  &__link {
-    cursor: pointer;
-    color: $gray-primary-color;
-    transition: $transition-duration;
+  &__home-image {
+    height: 16px;
+    width: 16px;
+  }
 
-    &:hover {
-      transform: scale(1.05);
+  &__arrow {
+    height: 16px;
+    width: 16px;
+    background-image: url(../../icons/arrow-disabled-right.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__title {
+    @include smallText;
+    text-decoration: none;
+    margin: 0;
+    color: $secondary-color;
+
+    &--target {
+      color: $secondary-color;
     }
+  }
+
+  &__product-title {
+    @include smallText;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

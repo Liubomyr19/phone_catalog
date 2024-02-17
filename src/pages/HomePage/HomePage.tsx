@@ -1,49 +1,27 @@
-import { useState, useEffect } from 'react';
-import { ProductsSlider } from '../../components/ProductsSlider';
-import { Slider } from '../../components/Slider/Slider';
-import { Product } from '../../types/Product';
-import { getProducts } from '../../api/productsApi';
-import { Categories } from '../../components/Categories';
+import { useContext } from 'react';
+import { BannerSlider } from '../../components/BannerSlider/BannerSlider';
+import { Categories } from '../../components/Categories/Categories';
+import { GlobalContext } from '../../components/Context/GlobalContext';
+import { ProductSlider } from '../../components/ProductSlider/ProductSlider';
+import { getHotPriceProducts } from '../../helpers/getHotPriceProducts';
+import './HomePage.scss';
 
 export const HomePage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const { products } = useContext(GlobalContext);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getProducts()
-      .then(setProducts)
-      .catch(() => {
-        setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  const sortHotPrice = [...products].sort(
-    (a, b) => b.fullPrice - b.price - (a.fullPrice - a.price),
-  );
-
-  const sortNewModels = [...products].sort((a, b) => b.year - a.year);
+  const hotPriceProducts = getHotPriceProducts(products);
+  const brandNewProducts = [...products].sort((a, b) => a.year - b.year)
+    .reverse();
 
   return (
-    <div className="container">
-      <Slider />
-      <ProductsSlider
-        products={sortHotPrice}
-        isLoading={isLoading}
-        isError={isError}
-        title="Hot prices"
-      />
-      <Categories products={products} />
-      <ProductsSlider
-        products={sortNewModels}
-        isLoading={isLoading}
-        isError={isError}
-        title="Brand new models"
-      />
+    <div className="home-page">
+      <BannerSlider />
+
+      <ProductSlider title="Hot products" products={hotPriceProducts} />
+
+      <Categories />
+
+      <ProductSlider title="Brand new" products={brandNewProducts} />
     </div>
   );
 };

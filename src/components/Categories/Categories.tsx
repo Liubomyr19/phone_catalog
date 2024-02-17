@@ -1,65 +1,68 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import React from 'react';
 import './Categories.scss';
-import phones from '../../photo/category-phones.png';
-import tablets from '../../photo/category-tablets.png';
-import accessories from '../../photo/category-accessories.png';
-import { Product } from '../../types/Product';
+import { ICONS } from '../../icons';
+import { GlobalContext } from '../Context/GlobalContext';
 
-interface Props {
-  products: Product[];
-}
-
-export const Categories: React.FC<Props> = ({ products }) => {
-  const categoryAmount = (type: string) => {
-    return products.filter((item) => item.category === type).length;
-  };
+export const Categories = () => {
+  const { products } = useContext(GlobalContext);
+  const phones = products.filter(product => product.category === 'phones');
+  const tablets = products.filter(product => product.category === 'tablet');
+  const accessories = products.filter(
+    product => product.category === 'accessories',
+  );
 
   return (
-    <section className="categories" data-cy="categoryLinksContainer">
-      <h1 className="categories__title">Shop by category</h1>
+    <section className="categories">
+      <div className="categories__container">
+        <h1 className="categories__title">Shop by category</h1>
+        <div className="categories__phones">
+          <Link to="/phones">
+            <img
+              src={ICONS.categoryPhones}
+              alt="Category phones"
+              className="categories__phones-image"
+            />
 
-      <div className="categories__content">
-        <Link className="categories__item" to="/phones">
-          <div>
+            <div className="categories__phones-title">Mobile phones</div>
+
+            <div className="categories__phones-description">
+              {`${phones.length} models`}
+            </div>
+          </Link>
+        </div>
+
+        <div className="categories__tablets">
+          <Link to="/tablets">
             <img
-              src={phones}
-              alt="category-phones"
-              className="categories__item--img"
+              src={ICONS.categoryTablets}
+              alt="Category tablets"
+              className="categories__tablets-image"
             />
-          </div>
-          <p className="categories__item--title">Mobile phones</p>
-          <span className="categories__item--amount">
-            {`${categoryAmount('phones')} models`}
-          </span>
-        </Link>
-        <Link className="categories__item" to="/tablets">
-          <div>
+
+            <div className="categories__tablets-title">Tablets</div>
+
+            <div className="categories__tablets-description">
+              {`${tablets.length} models`}
+            </div>
+          </Link>
+        </div>
+
+        <div className="categories__accessories">
+          <Link to="/accessories">
             <img
-              src={tablets}
-              alt="category-tablets"
-              className="categories__item--img categories__item--tablets"
+              src={ICONS.categoryAccessories}
+              alt="Category accessories"
+              className="categories__accessories-image"
             />
-          </div>
-          <p className="categories__item--title">Tablets</p>
-          <span className="categories__item--amount">
-            {`${categoryAmount('tablets')} models`}
-          </span>
-        </Link>
-        <Link className="categories__item" to="/accessories">
-          <div>
-            <img
-              src={accessories}
-              alt="category-accessories"
-              className="categories__item--img
-              categories__item--img-accessories"
-            />
-          </div>
-          <p className="categories__item--title">Accessories</p>
-          <span className="categories__item--amount">
-            {`${categoryAmount('accessories')} models`}
-          </span>
-        </Link>
+
+            <div className="categories__accessories-title">Accessories</div>
+
+            <div className="categories__accessories-description">
+              {`${accessories.length} models`}
+            </div>
+          </Link>
+        </div>
       </div>
     </section>
   );

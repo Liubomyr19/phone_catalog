@@ -1,77 +1,169 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { GlobalContext } from '../../components/Context/GlobalContext';
+import { SortType } from '../../types/SortType';
+import { BreadCrumbs } from '../../components/BreadCrambs/BreadCrambs';
+import { Loader } from '../../components/Loader/Loader';
+import { ProductsList } from '../../components/ProductsList/ProductList';
+import { Pagination } from '../../components/Pagination/Pagination';
 import './PhonesPage.scss';
-import { Product } from '../../types/Product';
-import { getPhones } from '../../api/productsApi';
-import { Loader } from '../../components/Loader';
-import { ProductList } from '../../components/ProductsList';
-import { Pagination } from '../../components/Pagination';
-import { SelectSortBy } from '../../components/SelectSortBy';
-import { Filter } from '../../helpers/Filters';
-import { SelectItems } from '../../components/SelectItems';
-import { BreadCrambs } from '../../components/BreadCrambs';
+import { ICONS } from '../../icons';
 
-export const PhonesPage: React.FC = () => {
+export const SORT: SortType = {
+  NEWEST: 'Newest',
+  ALPHABETICALLY: 'Alphabetically',
+  CHEAPEST: 'Cheapest',
+};
+
+const sortingOptions = [
+  { value: 'age', label: SORT.NEWEST },
+  { value: 'name', label: SORT.ALPHABETICALLY },
+  { value: 'price', label: SORT.CHEAPEST },
+];
+
+const itemsPerPageOptions = [
+  { value: 'all', label: 'All' },
+  { value: '4', label: '4' },
+  { value: '8', label: '8' },
+  { value: '16', label: '16' },
+];
+
+export const PhonePage = () => {
   const [searchParams] = useSearchParams();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const filteredProducts = useMemo(() => {
-    return Filter(products, searchParams);
-  }, [products, searchParams]);
-  const total = filteredProducts.length;
-  const currentPage = +(searchParams.get('page') || '1');
-  const perPage = +(searchParams.get('perPage') || '') || total;
-  const pagesAmount = Math.ceil(total / perPage);
-  // const query = searchParams.get('query' || '');
-  const firstItem = currentPage * +perPage - perPage;
-  const lastItem
-    = perPage * currentPage < total ? perPage * currentPage : total;
-  const currentItems = useMemo(() => {
-    return filteredProducts.slice(firstItem, lastItem);
-  }, [filteredProducts, firstItem, lastItem]);
+  const {
+    products, handlePerPageChange, setSortingOption, isLoading,
+  } = useContext(GlobalContext);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getPhones()
-      .then(setProducts)
-      .catch(() => {
-        setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
+  const page = +(searchParams.get('page') || 1);
+  const phonesPerPage = searchParams.get('perPage') || 4;
+  const query = searchParams.get('query') || '';
+  const sortBy = searchParams.get('sort') || 'age';
+
+  const getVisiblePhones = useCallback(() => {
+    let currentPhones = [...products];
+
+    currentPhones = currentPhones.sort((phone1, phone2) => {
+      switch (sortBy) {
+        case SORT.ALPHABETICALLY:
+          return phone1.name.localeCompare(phone2.name);
+
+        case SORT.NEWEST:
+          return phone1.year - phone2.year;
+
+        case SORT.CHEAPEST:
+          return phone1.price - phone2.price;
+
+        default:
+          return 0;
+      }
+    });
+
+    if (query) {
+      currentPhones = currentPhones.filter((phone) => {
+        return phone.name.toLowerCase().includes(query.toLowerCase());
       });
-  }, []);
+    }
+
+    return currentPhones;
+  }, [products, query, sortBy]);
+
+  const visiblePhones = getVisiblePhones();
+  const numOfPages = Math.ceil(visiblePhones.length / +phonesPerPage) || 1;
+
+  const firstProduct = (page - 1) * +phonesPerPage;
+  const lastProduct = page * +phonesPerPage < visiblePhones.length
+    ? page * +phonesPerPage
+    : visiblePhones.length;
 
   return (
-    <div className="productPage">
-      <BreadCrambs />
-      <h1 className="productPage__title">Mobile phones</h1>
-      {isLoading && <Loader />}
-      {!isLoading && isError && <p>Error: Unable to load data from server!</p>}
-      {!isLoading && !isError && (
-        <div className="productPage__content">
-          <p className="productPage__amount">{`${products.length} models`}</p>
-        </div>
-      )}
+    <section className="phones">
+      <BreadCrumbs page="phones" />
 
-      {!!products.length && (
-        <div className="productPage__select">
-          <SelectSortBy />
-          <SelectItems />
+      {isLoading ? (
+        <div className="loader">
+          <Loader />
         </div>
-      )}
-
-      {currentItems.length ? (
-        <ProductList products={currentItems} />
       ) : (
-        !!searchParams.toString().length && (
-          <p className="NoSearchResults">No search results...</p>
-        )
+        <div className="phones__content">
+          <div className="phones__info">
+            <h1 className="phones__title">Mobile phones</h1>
+            <span className="phones__count">
+              {`${visiblePhones.length} phone${visiblePhones.length === 1 ? '' : 's'}`}
+            </span>
+          </div>
+
+          {visiblePhones.length === 0 ? (
+            <div className="warning-message">
+              <img
+                src={ICONS.iconWarning}
+                alt="warning"
+                className="warning-message__image"
+              />
+              <h1 className="warning-message__text">
+                No search result
+              </h1>
+            </div>
+          ) : (
+            <>
+              <div className="phones__dropdowns">
+                <div className="dropdown">
+                  <span className="dropdown__title">Sort by</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortingOption(e.target.value)}
+                    className="dropdown__sorting"
+                  >
+                    {sortingOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <img
+                    src={ICONS.arrowDown}
+                    alt="Arrow select"
+                    className="dropdown__sorting--icon"
+                  />
+                </div>
+                <div className="dropdown dropdown--items-per-page">
+                  <span className="dropdown__title">Items on page</span>
+                  <select
+                    value={phonesPerPage}
+                    onChange={handlePerPageChange}
+                    className="dropdown__sorting dropdown__sorting--pages"
+                  >
+                    {itemsPerPageOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <img
+                    src={ICONS.arrowDown}
+                    alt="Arrow select"
+                    className="dropdown__sorting--icon"
+                  />
+                </div>
+              </div>
+              <div className={classNames('phones__list', {
+                'phones__list--with-margin': numOfPages === 1,
+              })}
+              >
+                <ProductsList
+                  products={visiblePhones.slice(firstProduct, lastProduct)}
+                />
+              </div>
+
+              {numOfPages !== 1 && (
+                <div className="phones__pagination">
+                  <Pagination total={numOfPages} currentPage={page} />
+                </div>
+              )}
+            </>
+          )}
+        </div>
       )}
-      {!!filteredProducts.length && pagesAmount !== 1 && (
-        <Pagination currentPage={currentPage} pageAmount={pagesAmount} />
-      )}
-    </div>
+    </section>
   );
 };

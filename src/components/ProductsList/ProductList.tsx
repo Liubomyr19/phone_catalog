@@ -1,19 +1,18 @@
-import React from 'react';
-import './ProductList.scss';
 import { Product } from '../../types/Product';
-import { ProductCard } from '../ProductCard';
+import { ProductCard } from '../ProductCard/ProductCard';
+import './ProductList.scss';
 
-interface Props {
-  products: Product[];
-}
+type Props = {
+  products: Product[],
+};
 
-export const ProductList: React.FC<Props> = ({ products }) => {
+export const ProductsList: React.FC<Props> = ({ products }) => {
   return (
-    <ul className="productList" data-cy="productList">
-      {products.map((product) => (
-        <li className="productList__item" key={product.id}>
-          <ProductCard product={product} />
-        </li>
+    <ul className="products__list" data-cy="productList">
+      {products.map(product => (
+        <div className="products__list-item">
+          <ProductCard product={product} key={product.id} />
+        </div>
       ))}
     </ul>
   );

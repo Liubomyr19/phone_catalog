@@ -1,8 +1,14 @@
-@import "../../utils/main";
+@import '../../utils/mixins.scss';
+@import '../../utils/variables.scss';
+
 
 .footer {
-  width: 100%;
+  position: relative;
+  bottom: 0;
+  right: 0;
+  left: 0;
   height: 96px;
+  margin-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,76 +16,75 @@
 
   &__container {
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 
   &__logo {
     display: flex;
+
+    height: 24px;
+    width: 40px;
+    @include hover(scale, 1.07);
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
+    gap: 64px;
 
-    &--img {
-      width: 40px;
-      height: 24px;
+    & > * {
+      position: relative;
+      padding-block: 43px;
+      @include uppercaseText;
+      color: $secondary-color;
+      text-transform: uppercase;
+
+      &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: $secondary-color;
+
+      transition: transform $transition-duration;
+      transform: scale(0);
+      transform-origin: left;
     }
-  }
 
-  &__nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-
-    &--link {
-      @extend %uppercase;
-
-      color: $gray-secondary-color;
-      transition: color $transition-duration;
-
-      &:hover {
-        color: $gray-primary-color;
+      &:hover::after {
+        transform: scale(1);
       }
     }
   }
 
-  &__backToTop {
+  &__back-to-top {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 16px;
-    align-items: center;
-    justify-content: space-between;
-    height: 32px;
-    background-color: transparent;
-    border: none;
 
-    &--message {
-      @extend %small-text;
-
-      color: $gray-secondary-color;
-      cursor: pointer;
-      transition: color $transition-duration;
-
-      @include on-tablet {
-        display: none;
-      }
-
-      &:hover {
-        color: $gray-primary-color;
-      }
+    &--text {
+      @include smallText;
+      color: $secondary-color;
     }
+  }
+}
 
-    &--btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 32px;
-      border: 1px solid $gray-icons-color;
-      cursor: pointer;
-      transition: border $transition-duration;
+.button-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  background-color: #fff;
+  border: 1px solid $icons-color;
 
-      &:hover {
-        border: 1px solid $gray-primary-color;
-      }
-    }
+  &:hover {
+    border-color: $primary-color;
   }
 }

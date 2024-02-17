@@ -25,7 +25,7 @@ The project is implemented using the following technologies:
 - React.js: Implementation of the React library to create a dynamic and efficient interface, allowing easy interaction with various components of the application.
 
 ## Preview 
-You can view a preview of the project by the link [here](https://Liubomyr19.github.io/phone-catalog/#/)
+You can view a preview of the project by the link [here](https://Liubomyr19.github.io/react_phone-catalog/#/)
 
 ## Getting Started
 To run the project on a local server, follow these steps:

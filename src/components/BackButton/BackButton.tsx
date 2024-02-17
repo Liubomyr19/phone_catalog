@@ -1,19 +1,19 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ICONS } from '../../icons';
 import './BackButton.scss';
 
 export const BackButton: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
-    <button
-      type="button"
-      data-cy="backButton"
-      className="backButton"
-      onClick={() => navigate('..')}
+    <Link
+      to="../"
+      className="back-button"
     >
-      <div className="icon icon--left" />
-      Back
-    </button>
+      <img
+        src={ICONS.arrowLeft}
+        alt="button back"
+        className="back-button__icon"
+      />
+      <span className="back-button__text">Back</span>
+    </Link>
   );
 };

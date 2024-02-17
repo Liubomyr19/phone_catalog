@@ -1,0 +1,111 @@
+@import '../../utils/variables.scss';
+@import '../../utils/mixins.scss';
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 24px;
+  padding-inline: 40px;
+  border: 1px solid $elements-color;
+
+  @include onMobile {
+    display: inline;
+    padding: 5px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__delete {
+    background-image: url(../../icons/icon-close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: #fff;;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.2)
+    }
+  }
+
+  &__image {
+    height: 100%;
+
+    &--container {
+      display: flex;
+      align-items: center;
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  &__link {
+    display: flex;
+    gap: 31px;
+    align-items: center;
+    text-decoration: none;
+    color: $primary-color;
+  }
+
+  &__title {
+    @include bodyText;
+    width: 296px;
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 43px;
+    gap: 13px;
+    @include bodyText;
+
+    &--count {
+      text-align: center;
+      width: 15px;
+    }
+  }
+
+  &__price {
+    width: 100px;
+    @include h2Text;
+  }
+}
+
+.button {
+  height: 32px;
+  width: 32px;
+  border: 1px solid $icons-color;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &--minus {
+    background-image: url(../../icons/icon-minus.svg);
+
+    &-disabled {
+      background-image: url(../../icons/icon-minus-disabled.svg);
+
+      &:hover {
+        border-color: $icons-color;
+      }
+    }
+  }
+
+  &--plus {
+    background-image: url(../../icons/icon-plus.svg);
+  }
+}

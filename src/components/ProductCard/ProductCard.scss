@@ -1,132 +1,119 @@
-@import "../../utils/main";
+@import '../../utils/variables.scss';
+@import '../../utils/mixins.scss';
 
-.productCard {
-  box-sizing: border-box;
+.product {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 32px 24px 24px;
-  width: 272px;
+  justify-content: space-between;
+  padding: 24px;
   height: 507px;
-  border: 1px solid $gray-icons-color;
-  transition: border $transition-duration;
-  text-decoration: none;
+  width: 272px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid $elements-color;
 
-  @include on-tablet {
-    width: 220px;
+  @include onTablet {
     height: 400px;
-    padding: 20px 16px;
+    width: 220px;
+    padding: 20px;
+  }
+
+  &:last-child {
+    margin-right: 0;
   }
 
   &:hover {
-    border: 1px solid $gray-primary-color;
+    box-shadow: 0 3px 13px rgba(#172031, 0.26);
   }
 
-  &__photo {
-    width: 208px;
-    height: 208px;
+  &__image {
     display: flex;
     justify-content: center;
     margin-bottom: 24px;
+    height: 208px;
+    width: 208px;
 
-    @include on-tablet {
-      width: 150px;
+    @include onTablet {
       height: 150px;
-      margin-bottom: 16px;
+      width: 150px;
     }
-  }
 
-  &__img {
-    height: 100%;
+    &--item {
+      height: 100%;
+    }
   }
 
   &__title {
-    width: 100%;
-    height: 42px;
-
-    &--text {
-      text-align: start;
-
-      @extend %body-text;
-
-      color: $gray-primary-color;
-      text-decoration: none;
-    }
+    display: flex;
+    line-height: 21px;
+    color: $primary-color;
+    margin-bottom: 8px;
+    min-height: 42px;
   }
 
   &__price {
-    width: 100%;
-    height: 44px;
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-bottom: 1px solid $gray-icons-color;
-    margin-bottom: 16px;
+    margin-bottom: 22.5px;
 
-    @include on-mobile {
-      margin-bottom: 12px;
-    }
-
-    &--current {
-      @extend %h2;
-
+    &-fullPrice {
       font-size: 22px;
-      color: $gray-primary-color;
-    }
-
-    &--full {
-      font-family: " Mont-Regular ", sans-serif;
-      font-size: 22px;
-      font-style: normal;
+      color: $secondary-color;
       font-weight: 500;
+      line-height: 140%;
       text-decoration: line-through;
-      color: $gray-secondary-color;
-    }
-  }
-
-  &__info {
-    @extend %small-text;
-
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
-
-    &--title {
-      color: $gray-secondary-color;
     }
 
-    &--wrapper {
-      display: flex;
+    &-current {
+      font-size: 22px;
+      color: $primary-color;
+      font-weight: 700;
+      line-height: 140%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      margin-top: 44px;
+      height: 1px;
       width: 100%;
-      justify-content: space-between;
-    }
-
-    &--description {
-      color: $gray-primary-color;
+      background-color: $elements-color;
     }
   }
 
-  &__buttons {
+  &__properties {
+    margin-bottom: 16px;
+  }
+
+  &__screen,
+  &__capacity {
+    margin-bottom: 8px;
+  }
+
+  &__screen,
+  &__capacity,
+  &__ram {
     display: flex;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
   }
-}
 
-.buttonAdd {
-  @extend %body-text;
+  &__screen-text,
+  &__capacity-text,
+  &__ram-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: $secondary-color;
+  }
 
-  padding: 0;
-  width: 176px;
-  height: 40px;
-  border: 1px solid $gray-primary-color;
-  background-color: $gray-primary-color;
-  color: $white-color;
-  cursor: pointer;
-  transition: box-shadow $transition-duration;
-
-  &:hover {
-    box-shadow: 5px 13px rgba(23, 32, 49, 0.26);
+  &__screen-value,
+  &__capacity-value,
+  &__ram-value {
+    color: $primary-color;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: normal;
   }
 }

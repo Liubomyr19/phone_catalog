@@ -1,61 +1,57 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import './ProductCard.scss';
 import { Product } from '../../types/Product';
-import { ButtonFavorites } from '../ButtonFavorites';
-import { ButtonAddCard } from '../ButtonAddCard';
+import './ProductCard.scss';
+import { ProductButtons } from '../ProductButtons/ProductButtons';
+import { API_URL } from '../../utils/api';
 
-interface Props {
+type Props = {
   product: Product;
-}
-
-const BASE_URL = 'https://mate-academy.github.io/react_phone-catalog/_new/';
+};
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
   const {
-    phoneId, name, price, fullPrice, screen, capacity, ram, image,
-  }
-    = product;
+    phoneId,
+    name,
+    price,
+    fullPrice,
+    screen,
+    capacity,
+    ram,
+    image,
+  } = product;
 
   return (
-    <Link
-      to={`/${product.category}/${phoneId}`}
-      className="productCard"
-      data-cy="cardsContainer"
-    >
-      <div className="productCard__photo">
-        <img
-          src={`${BASE_URL}${image}`}
-          alt="product"
-          className="productCard__img"
-        />
-      </div>
+    <div className="product">
+      <Link to={`/${product.category}/${phoneId}`}>
+        <div className="product__image">
+          <img
+            src={`${API_URL}${image}`}
+            alt={name}
+            className="product__image--item"
+          />
+        </div>
+        <p className="product__title">{name}</p>
+        <div className="product__price">
+          <div className="product__price-current">{`$${price}`}</div>
+          <div className="product__price-fullPrice">{`$${fullPrice}`}</div>
+        </div>
+        <div className="product__properties">
+          <div className="product__screen">
+            <p className="product__screen-text">Screen</p>
+            <p className="product__screen-value">{screen}</p>
+          </div>
+          <div className="product__capacity">
+            <p className="product__capacity-text">Capacity</p>
+            <p className="product__capacity-value">{capacity}</p>
+          </div>
+          <div className="product__ram">
+            <p className="product__ram-text">RAM</p>
+            <p className="product__ram-value">{ram}</p>
+          </div>
+        </div>
+      </Link>
 
-      <div className="productCard__title">
-        <h4 className="productCard__title--text">{name}</h4>
-      </div>
-      <div className="productCard__price">
-        <span className="productCard__price--current">{`$${price}`}</span>
-        <span className="productCard__price--full">{`$${fullPrice}`}</span>
-      </div>
-      <div className="productCard__info">
-        <div className="productCard__info--wrapper">
-          <span className="productCard__info--title">Screen</span>
-          <span className="productCard__info--description">{screen}</span>
-        </div>
-        <div className="productCard__info--wrapper">
-          <span className="productCard__info--title">Capacity</span>
-          <span className="productCard__info--description">{capacity}</span>
-        </div>
-        <div className="productCard__info--wrapper">
-          <span className="productCard__info--title">RAM</span>
-          <span className="productCard__info--description">{ram}</span>
-        </div>
-      </div>
-      <div className="productCard__buttons">
-        <ButtonAddCard product={product} />
-        <ButtonFavorites product={product} />
-      </div>
-    </Link>
+      <ProductButtons product={product} />
+    </div>
   );
 };

@@ -1,94 +1,73 @@
-import React, { useContext } from 'react';
-import classNames from 'classnames';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import './header.scss';
-import logo from '../../icons/logo.svg';
-import { SearchField } from '../SearchField';
-import { FavoriteContext } from '../../api/context/FavoriteContext';
-import { CardContext } from '../../api/context/CardContext';
+import { useContext } from 'react';
+import cn from 'classnames';
+import { ICONS } from '../../icons';
+import './Header.scss';
+import { GlobalContext } from '../Context/GlobalContext';
+import { Navigation } from '../Navigation/Navigation';
+import { Search } from '../Search/Search';
 
-export const NavBar: React.FC = () => {
-  const getLinkClass = ({ isActive }: { isActive: boolean }) => {
-    return classNames('nav__link', { 'is-active': isActive });
-  };
+const getLinkClassIcon = ({ isActive }: { isActive: boolean }) => cn(
+  'header__right-link', {
+    'header__right-link--active': isActive,
+  },
+);
 
-  const { favProducts } = useContext(FavoriteContext);
-  const { cardProducts } = useContext(CardContext);
+export const Header = () => {
+  const { cart, favList } = useContext(GlobalContext);
   const { pathname } = useLocation();
-  const isSearchShown
-    = pathname === '/phones'
-    || pathname === '/tablets'
-    || pathname === '/accessories'
-    || pathname === '/favorites';
 
-  const isCartOpen = pathname !== '/card';
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const isSearchVisible = pathname === '/phones'
+    || pathname === '/tablets'
+    || pathname === '/favourites'
+    || pathname === '/accessories';
 
   return (
-    <>
-      <header className="header">
-        <div className="header__links">
-          <Link className="header__logo" to="/">
-            <img src={logo} alt="logo" />
-          </Link>
+    <header className="header">
+      <div className="header__left-box">
+        <Link to="/">
+          <img src={ICONS.logo} alt="logo" className="header__left-box--logo" />
+        </Link>
+        {pathname !== '/cart' && <Navigation />}
+      </div>
 
-          <div className="nav">
-            {isCartOpen && (
-              <ul className="nav__list">
-                <li className="nav__item">
-                  <NavLink to="/" className={getLinkClass}>
-                    Home
-                  </NavLink>
-                </li>
-                <li className="nav__item">
-                  <NavLink to="/phones" className={getLinkClass}>
-                    Phones
-                  </NavLink>
-                </li>
-                <li className="nav__item">
-                  <NavLink to="/tablets" className={getLinkClass}>
-                    tablets
-                  </NavLink>
-                </li>
-                <li className="nav__item">
-                  <NavLink to="/accessories" className={getLinkClass}>
-                    accessories
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </div>
-        </div>
+      <div className="header__right-box">
+        {isSearchVisible && <Search />}
 
-        <div className="header__icons">
-          {isSearchShown && <SearchField />}
-
-          {isCartOpen && (
-            <NavLink to="/favorites" className="header__icons--link">
-              <div className="header__icons--link-img icon icon--fav">
-                {!!favProducts.length && (
-                  <div className="header__icons--link-fav">
-                    <span className="header__icons--link-fav-amount">
-                      {favProducts.length}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </NavLink>
-          )}
-
-          <NavLink to="/card" className="header__icons--link">
-            <div className="header__icons--link-img icon icon--shop">
-              {!!cardProducts.length && (
-                <div className="header__icons--link-fav">
-                  <span className="header__icons--link-fav-amount">
-                    {cardProducts.length}
-                  </span>
+        {pathname !== '/cart' && (
+          <NavLink to="/favourites" className={getLinkClassIcon}>
+            <div className="icon__container">
+              <img
+                src={ICONS.favourites}
+                className="icon"
+                alt="favourites"
+              />
+              {!!favList.length && (
+                <div className="counter">
+                  {favList.length}
                 </div>
               )}
             </div>
           </NavLink>
-        </div>
-      </header>
-    </>
+        )}
+
+        <NavLink to="/cart" className={getLinkClassIcon}>
+          <div className="icon__container">
+            <img
+              src={ICONS.shoppingCart}
+              className="icon"
+              alt="shopping cart"
+            />
+            {!!cart.length && (
+              <div className="counter">
+                {totalQuantity}
+              </div>
+            )}
+          </div>
+        </NavLink>
+      </div>
+    </header>
   );
 };

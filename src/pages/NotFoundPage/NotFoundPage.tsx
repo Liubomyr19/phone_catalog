@@ -1,10 +1,14 @@
-import React from 'react';
+import { ICONS } from '../../icons';
 import './NotFoundPage.scss';
 
-export const NotFoundPage: React.FC = () => {
+export const NotFoundPage = () => {
   return (
-    <div className="notFoundPage">
-      <h1 className="notFoundPage__title">Page not found</h1>
+    <div className="container">
+      <img
+        src={ICONS.workInProgress}
+        alt="Work in progress"
+        className="container__image"
+      />
     </div>
   );
 };

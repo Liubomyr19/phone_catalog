@@ -1,5 +1,8 @@
-/* eslint-disable react/no-deprecated */
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Root } from './Root';
 
-ReactDOM.render(<Root />, document.getElementById('root') as HTMLDivElement);
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
+
+root.render(<Root />);

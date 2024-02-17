@@ -1,4 +1,4 @@
-export interface ProductDetails {
+export type ProductDetails = {
   id: string;
   namespaceId: string;
   name: string;
@@ -9,10 +9,7 @@ export interface ProductDetails {
   colorsAvailable: string[];
   color: string;
   images: string[];
-  description: {
-    title: string;
-    text: string[];
-  }[];
+  description: Description[];
   screen: string;
   resolution: string;
   processor: string;
@@ -20,4 +17,10 @@ export interface ProductDetails {
   camera: string;
   zoom: string;
   cell: string[];
-}
+  [key: string]: string | string[] | number | Description[];
+};
+
+export type Description = {
+  title: string;
+  text: string[];
+};

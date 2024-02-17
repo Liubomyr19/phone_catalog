@@ -1,87 +1,144 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
-import './Pagination.scss';
-import { Link, useSearchParams } from 'react-router-dom';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
-import { getNumbers } from '../../helpers/Helpers';
-import { getSearchWith } from '../../helpers/SearchHelper';
+import { Link, useSearchParams } from 'react-router-dom';
+import { getNumbers } from '../../helpers/getNumbers';
+import { getSearchWith } from '../../helpers/getSearchWith';
+import './Pagination.scss';
+import { ICONS } from '../../icons';
 
-interface Props {
+type Props = {
+  total: number;
   currentPage: number;
-  pageAmount: number;
-}
+};
 
-export const Pagination: React.FC<Props> = ({ currentPage, pageAmount }) => {
+export const Pagination: React.FC<Props> = ({ currentPage, total }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pages: number[] = getNumbers(1, pageAmount);
+  const pages = getNumbers(total);
 
-  const handleLeft = () => {
-    setSearchParams(
-      getSearchWith(
-        {
-          page: `${currentPage - 1}`,
-        },
-        searchParams,
-      ),
-    );
-  };
+  const handlePreviousPage = useCallback(() => {
+    const page = +(searchParams.get('page') || 1);
 
-  const handleRight = () => {
     setSearchParams(
-      getSearchWith(
-        {
-          page: `${currentPage + 1}`,
-        },
-        searchParams,
-      ),
+      getSearchWith(searchParams, { page: (page - 1).toString() }),
     );
-  };
+  }, [searchParams, setSearchParams]);
+
+  const handleNextPage = useCallback(() => {
+    const page = +(searchParams.get('page') || 1);
+
+    setSearchParams(
+      getSearchWith(searchParams, { page: (page + 1).toString() }),
+    );
+  }, [searchParams, setSearchParams]);
+
+  const firstPage = 1;
+  const lastPage = pages.length;
+
+  const maxPages = 3;
+
+  const startIndex = currentPage <= maxPages
+    ? 1
+    : currentPage - (maxPages - 1);
+  const lastIndex = Math.min(startIndex + maxPages, lastPage);
+
+  const dots = <div className="pagination__dots">...</div>;
 
   return (
-    <div className="pagination" data-cy="pagination">
+    <div className="pagination">
       <button
-        className={classNames('pagination__btn pagination__btn--left', {
-          disabled: currentPage === 1,
-        })}
-        data-cy="paginationLeft"
         type="button"
-        onClick={handleLeft}
+        data-cy="paginationLeft"
+        aria-label="prev page"
+        className="button button--prev"
         disabled={currentPage === 1}
+        onClick={handlePreviousPage}
       >
-        <div className="icon icon--left" />
+        <img src={ICONS.arrowLeft} alt="button left" />
       </button>
 
-      <div className="pagination__pages">
-        {pages.map((page) => (
-          <Link
-            key={page}
-            to={{
-              search: getSearchWith(
-                {
-                  page: page.toString(),
+      <ul className="pagination__list">
+        {pages.length > 2 && (
+          <>
+            <Link
+              to={{
+                search: getSearchWith(searchParams, {
+                  page: firstPage.toString(),
+                }),
+              }}
+              className={classNames(
+                'pagination__link', {
+                  'pagination__link--active': currentPage === firstPage,
                 },
-                searchParams,
-              ),
+              )}
+            >
+              <li
+                className={classNames('pagination__list-item', {
+                  'pagination__list-item--active':
+                  currentPage === firstPage,
+                })}
+              >
+                {firstPage}
+              </li>
+            </Link>
+            {currentPage > 3 && dots}
+          </>
+        )}
+
+        {pages.slice(startIndex, lastIndex).map((page) => (
+          <Link
+            to={{
+              search: getSearchWith(searchParams, {
+                page: page.toString(),
+              }).toString(),
             }}
-            className={classNames('pagination__pages--link', {
-              'active-link': currentPage === page,
+            key={page}
+            className={classNames('pagination__link', {
+              'pagination__link--active': currentPage === page,
             })}
           >
-            {page}
+            <li
+              className={classNames('pagination__list-item',
+                { 'pagination__list-item--active': currentPage === page })}
+            >
+              {page}
+            </li>
           </Link>
         ))}
-      </div>
+
+        {lastIndex < lastPage && dots}
+
+        {pages.length - 1 > currentPage && (
+          <Link
+            to={{
+              search: getSearchWith(searchParams, {
+                page: lastPage.toString(),
+              }),
+            }}
+            className={classNames(
+              'pagination__link', {
+                'pagination__link--active': currentPage === lastPage,
+              },
+            )}
+          >
+            <li
+              className={classNames('pagination__list-item',
+                { 'pagination__list-item--active': currentPage === lastPage })}
+            >
+              {lastPage}
+            </li>
+          </Link>
+        )}
+      </ul>
 
       <button
-        className={classNames('pagination__btn pagination__btn--right', {
-          disabled: currentPage === pages.length,
-        })}
-        data-cy="paginationRight"
         type="button"
-        onClick={handleRight}
-        disabled={currentPage === pages.length}
+        data-cy="paginationRight"
+        aria-label="next page"
+        className="button button--next"
+        disabled={currentPage === lastPage}
+        onClick={handleNextPage}
       >
-        <div className="icon icon--right" />
+        <img src={ICONS.arrowRight} alt="button right" />
       </button>
     </div>
   );

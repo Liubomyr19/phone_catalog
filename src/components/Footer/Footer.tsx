@@ -1,61 +1,46 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { ICONS } from '../../icons';
 import './Footer.scss';
-import logo from '../../icons/logo.svg';
 
 export const Footer = () => {
-  const goToTop = () => {
-    const scrollToTop = () => {
-      const scrollTop = window.scrollY;
-
-      if (scrollTop > 0) {
-        window.requestAnimationFrame(scrollToTop);
-        window.scrollTo(0, scrollTop - scrollTop / 8);
-      }
-    };
-
-    scrollToTop();
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   return (
-    <div className="footer">
-      <div className="footer__container main main__container">
+    <footer className="footer">
+      <div className="footer__container main-content__container">
         <Link to="/" className="footer__logo">
-          <img src={logo} alt="footer-logo" className="footer__logo--img" />
+          <img src={ICONS.logo} alt="logo" />
         </Link>
 
-        <div className="footer__nav">
-          <Link
-            to="https://github.com/Liubomyr19"
-            className="footer__nav--link"
+        <div className="footer__links">
+          <NavLink
+            to="https://github.com/Liubomyr19/"
             target="_blank"
           >
             Github
-          </Link>
+          </NavLink>
 
-          <Link
-            to="https://github.com/Liubomyr19"
-            className="footer__nav--link"
+          <NavLink
+            to="https://github.com/Liubomyr19/"
             target="_blank"
           >
             Contacts
-          </Link>
+          </NavLink>
 
-          <Link
-            to="https://github.com/Liubomyr19"
-            className="footer__nav--link"
-            target="_blank"
-          >
-            Rights
-          </Link>
+          <NavLink to="/rights">Rights</NavLink>
         </div>
 
-        <button className="footer__backToTop" type="button" onClick={goToTop}>
-          <p className="footer__backToTop--message">Back to top</p>
-          <div className="footer__backToTop--btn">
-            <div className="icon icon--toTop" />
-          </div>
-        </button>
+        <div className="footer__back-to-top">
+          <span className="footer__back-to-top--text">Back to top</span>
+          <button className="button-top" type="button" onClick={scrollTop}>
+            <img src={ICONS.arrowTop} alt="back to top button" />
+          </button>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };

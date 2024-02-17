@@ -1,47 +1,45 @@
-import React from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import { ICONS } from '../../icons';
 import './BreadCrambs.scss';
-import { Link, useLocation } from 'react-router-dom';
-import { ProductDetails } from '../../types/ProductDetails';
 
-interface Props {
-  product?: ProductDetails | null;
-}
+type Props = {
+  page: string,
+  productName?: string,
+};
 
-function capitalizeCategory(word: string) {
-  return word[0].toUpperCase() + word.slice(1);
-}
-
-export const BreadCrambs: React.FC<Props> = ({ product }) => {
-  const { pathname } = useLocation();
-  const categoryName = pathname.slice(1).split('/')[0];
+export const BreadCrumbs: React.FC<Props> = ({ page, productName }) => {
+  const formattedPage = page.charAt(0).toUpperCase() + page.slice(1);
 
   return (
-    <div className="breadCrambs" data-cy="breadCrumbs">
-      <Link to="/" className="breadCrambs__link--home">
-        <div className="icon icon--home" />
+    <div className="breadcrumbs">
+      <Link to="/" className="breadcrumbs__home">
+        <img
+          src={ICONS.iconHome}
+          alt="Return to home page"
+          className="breadcrumbs__home-image"
+        />
       </Link>
 
-      <div className="icon icon--right" />
+      <div className="breadcrumbs__arrow" />
 
-      {!product ? (
-        <span className="breadCrambs__current">
-          {capitalizeCategory(categoryName)}
-        </span>
-      ) : (
+      <Link
+        to={`/${page}`}
+        className={classNames('breadcrumbs__title', {
+          'breadcrumbs__title--target': productName,
+        })}
+      >
+        {formattedPage}
+      </Link>
+
+      {productName && (
         <>
-          <Link to={`/${categoryName}`} className="breadCrambs__link">
-            {capitalizeCategory(categoryName)}
-          </Link>
-
-          <div className="icon icon--right" />
-
-          <span className="breadCrambs__current">{product.name}</span>
+          <div className="breadcrumbs__arrow" />
+          <p className="breadcrumbs__product-title">
+            {productName}
+          </p>
         </>
       )}
     </div>
   );
-};
-
-BreadCrambs.defaultProps = {
-  product: null,
 };

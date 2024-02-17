@@ -1,23 +1,21 @@
-@import "../../utils/main";
+@import '../../utils/variables.scss';
+@import '../../utils/mixins.scss';
 
-.backButton {
-  width: 66px;
-  height: 16px;
+.back-button {
   display: flex;
   align-items: center;
   gap: 4px;
-  color: $gray-secondary-color;
+  text-decoration: none;
+  margin-top: 24px;
+  margin-bottom: 16px;
 
-  @extend %small-text;
+  &__icon {
+    height: 16px;
+    width: 16px;
+  }
 
-  border: none;
-  background-color: transparent;
-  margin-top: 40px;
-  padding: 0;
-  cursor: pointer;
-  transition: $transition-duration;
-
-  &:hover {
-    color: $gray-primary-color;
+  &__text {
+    @include smallText;
+    color: $secondary-color;
   }
 }
