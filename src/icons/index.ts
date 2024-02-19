@@ -1,49 +1,26 @@
-import iconLogo from './icon-logo.svg';
-import iconFavourites from './icon-favourites.svg';
-import iconShoppingCart from './icon-shopping-cart.svg';
-import iconArrowLeft from './icon-arrow-left.svg';
-import iconArrowRight from './icon-arrow-right.svg';
-import tabletsImage from './tablets.jpg';
-import iphoneBanner from './iphone-banner.png';
-import categoryPhonesImage from './category-phones.png';
-import categoryTabletsImage from './category-tablets.jpg';
-import categoryAccessoriesImage from './category-accessories.jpg';
-import iconArrowTop from './arrow-top.svg';
-import iconDisabledLeft from './arrow-disabled-left.svg';
-import iconDisabledRight from './arrow-disabled-right.svg';
-import iconHome from './icon-home.svg';
-import iconSearch from './icon-search.svg';
-import iconClose from './icon-close.svg';
-import phonesBanner from './banner-phones.png';
-import tabletsBanner from './banner-tablets.png';
-import accessoriesBanner from './banner-accessories.png';
-import workInProgress from './work-in-progress.jpg';
-import iconWarning from './icon-warning.png';
-import arrowDown from './arrow-down.svg';
-import iconMinusDisabled from './icon-minus-disabled.svg';
-
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
 export const ICONS = {
-  logo: iconLogo,
-  favourites: iconFavourites,
-  shoppingCart: iconShoppingCart,
-  arrowLeft: iconArrowLeft,
-  arrowRight: iconArrowRight,
-  tablets: tabletsImage,
-  iphones: iphoneBanner,
-  categoryPhones: categoryPhonesImage,
-  categoryTablets: categoryTabletsImage,
-  categoryAccessories: categoryAccessoriesImage,
-  arrowTop: iconArrowTop,
-  arrowDisabledLeft: iconDisabledLeft,
-  arrowDisabledRight: iconDisabledRight,
-  iconHome,
-  iconSearch,
-  iconClose,
-  phonesBanner,
-  tabletsBanner,
-  accessoriesBanner,
-  workInProgress,
-  iconWarning,
-  arrowDown,
-  iconMinusDisabled,
+  logo: require('./logo.svg').default,
+  arrowLeft: require('./icon_arrow_left.svg').default,
+  arrowLeftDisabled: require('./icon_arrow_left_disabled.svg').default,
+  arrowRignt: require('./icon_arrow_right.svg').default,
+  arrowRigntDisabled: require('./icon_arrow_right_disabled.svg').default,
+  arrowUp: require('./icon_arrow_up.svg').default,
+  arrowDown: require('./icon_arrow_down.png').default,
+  iconClose: require('./icon_close.svg').default,
+  iconPlus: require('./icon_plus.svg').default,
+  iconMinus: require('./icon_minus.svg').default,
+  iconMinusDisabled: require('./icon_minus_disabled.svg').default,
+  iconFavorites: require('./icon_favorites.svg').default,
+  iconFavoritesAdded: require('./icon_favorites_selected.svg').default,
+  iconHome: require('./icon_home_address.svg').default,
+  iconCart: require('./icon_shopping_bag.svg').default,
+  iconSearch: require('./icon_search.svg').default,
+  categoryPhones: require('./category_phones.png').default,
+  categoryTablets: require('./category_tablets.png').default,
+  categoryAccessories: require('./category_accessories.png').default,
+  tabletsUnderConstruction: require('./tablets_under_construction.png').default,
+  accessoriesUnderConstruction: require('./accessories_under_construction.png').default,
 };

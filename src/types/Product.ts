@@ -12,5 +12,8 @@ export interface Product {
   ram: string;
   year: number;
   image: string;
+  inFavourite: boolean;
+  inCart: boolean;
   count: number;
+  totalAmount: number;
 }

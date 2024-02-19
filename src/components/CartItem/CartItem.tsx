@@ -1,83 +1,110 @@
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import classNames from 'classnames';
-import { GlobalContext } from '../Context/GlobalContext';
-import { CartItemType } from '../../types/CartItemType';
+import React, { useContext } from 'react';
+import { ICONS } from '../../icons';
+import { Product } from '../../types/Product';
+import { GlobalContext } from '../../Context/GlobalContext';
+import { BASE_URL } from '../../utils/constants';
 import './CartItem.scss';
-import { API_URL } from '../../utils/api';
 
 type Props = {
-  product: CartItemType,
+  item: Product;
 };
 
-export const CartItem: React.FC<Props> = ({ product }) => {
+export const CartItem: React.FC<Props> = ({ item }) => {
   const {
-    removingFromCart,
-    handleIncrease,
-    handleDecrease,
+    products,
+    setProducts,
+    localStore,
+    setLocalStore,
   } = useContext(GlobalContext);
 
-  const {
-    image,
-    name,
-    id,
-    phoneId,
-    price,
-    category,
-  } = product.product;
+  const handleCartItemChange = (action: string) => {
+    const currentProducts = [...products];
+    const currentStoreState = [...localStore];
+    const newItem = { ...item };
+
+    if (action === 'add') {
+      newItem.count += 1;
+      newItem.totalAmount += newItem.price;
+    }
+
+    if (action === 'reduce') {
+      if (newItem.count === 1) {
+        return;
+      }
+
+      newItem.count -= 1;
+      newItem.totalAmount -= newItem.price;
+    }
+
+    if (action === 'remove') {
+      newItem.count = 1;
+      newItem.inCart = false;
+      newItem.totalAmount = newItem.price;
+    }
+
+    const index = currentProducts
+      .findIndex(product => product.id === newItem.id);
+
+    const indexStore = currentStoreState
+      .findIndex(storeItem => storeItem.id === newItem.id);
+
+    if (indexStore !== -1) {
+      currentStoreState.splice(indexStore, 1, newItem);
+    }
+
+    currentProducts.splice(index, 1, newItem);
+
+    setProducts(currentProducts);
+    setLocalStore(currentStoreState);
+  };
 
   return (
-    <li className="cart-item">
-      <div className="cart-item__left">
+    <div className="cart-item" key={item.id}>
+      <button
+        type="button"
+        className="cart-item_delete"
+        onClick={() => handleCartItemChange('remove')}
+      >
+        <img src={ICONS.iconClose} alt="Icon delete product" />
+      </button>
+      <div className="cart-item_img-box">
+        <img
+          src={`${BASE_URL}${item.image}`}
+          alt="Product banner"
+          className="cart-item_img"
+        />
+      </div>
+      <p
+        className="cart-item_name body-text-style"
+      >
+        {item.name}
+      </p>
+      <div className="cart-item_btns">
         <button
           type="button"
-          aria-label="delete item"
-          className="cart-item__delete"
-          onClick={() => removingFromCart(id)}
-        />
-
-        <Link
-          className="cart-item__link"
-          to={`/${category}/${phoneId}`}
+          className="products-slider_btn page-btns"
+          onClick={() => handleCartItemChange('reduce')}
         >
-          <div className="cart-item__image--container">
-            <img
-              src={`${API_URL}${image}`}
-              alt={name}
-              className="cart-item__image"
-            />
-          </div>
-          <span className="cart-item__title">
-            {name}
-          </span>
-        </Link>
+          {item.count > 1 ? (
+            <img src={ICONS.iconMinus} alt="Reduce quantity active" />
+          ) : (
+            <img src={ICONS.iconMinusDisabled} alt="Reduce quantity unactive" />
+          )}
+        </button>
+        <p
+          className="cart-item_count body-text-style"
+        >
+          {item.count}
+        </p>
+        <button
+          type="button"
+          className="products-slider_btn page-btns"
+          onClick={() => handleCartItemChange('add')}
+        >
+          <img src={ICONS.iconPlus} alt="Increase quantity" />
+        </button>
       </div>
-
-      <div className="cart-item__right">
-        <div className="cart-item__quantity">
-          <button
-            type="button"
-            aria-label="button decrease"
-            className={classNames('button button--minus', {
-              'button--minus-disabled': product.quantity === 1,
-            })}
-            disabled={product.quantity === 1}
-            onClick={() => handleDecrease(id)}
-          />
-          <span className="cart-item__quantity--count">
-            {product.quantity || 1}
-          </span>
-          <button
-            type="button"
-            aria-label="button increase"
-            className="button button--plus"
-            onClick={() => handleIncrease(id)}
-          />
-        </div>
-        <span className="cart-item__price">
-          {`$${price * product.quantity}`}
-        </span>
-      </div>
-    </li>
+      <p className="cart-item_amount h2-text-style">{`$${item.totalAmount}`}</p>
+    </div>
   );
 };

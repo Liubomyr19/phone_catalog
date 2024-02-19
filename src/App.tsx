@@ -1,28 +1,26 @@
+import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import './App.scss';
-import { useContext } from 'react';
+import cn from 'classnames';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
-import { GlobalContext } from './components/Context/GlobalContext';
-import { Loader } from './components/Loader/Loader';
+import { GlobalContext } from './Context/GlobalContext';
+import './App.scss';
 
 const App = () => {
-  const { isLoading } = useContext(GlobalContext);
+  const { isMobMenuVisible } = useContext(GlobalContext);
 
   return (
-    <div className="App">
+    <div className={cn('App', {
+      'no-scroll': isMobMenuVisible,
+    })}
+    >
       <Header />
-
-      <main className="main-content">
-        <div className="main-content__container">
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <Outlet />
-          )}
-        </div>
+      <main className={cn('main', {
+        'main--blur': isMobMenuVisible,
+      })}
+      >
+        <Outlet />
       </main>
-
       <Footer />
     </div>
   );

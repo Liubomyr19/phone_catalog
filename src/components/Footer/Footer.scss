@@ -1,90 +1,59 @@
-@import '../../utils/mixins.scss';
-@import '../../utils/variables.scss';
-
+@import "../../utils/variables.scss";
+@import "../../utils/mixins.scss";
 
 .footer {
-  position: relative;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 96px;
-  margin-top: 80px;
+  padding-inline: 20px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  border-top: 1px solid $elements-color;
+  box-shadow: 0 0 0 1px #e2e6e9;
 
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  @include onTablet {
+    padding-inline: 80px;
   }
 
-  &__logo {
-    display: flex;
-
-    height: 24px;
-    width: 40px;
-    @include hover(scale, 1.07);
+  @include onDesktopLg {
+    padding-inline: 152px;
   }
 
-  &__links {
+  &_list {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 64px;
+    gap: 5px;
 
-    & > * {
-      position: relative;
-      padding-block: 43px;
-      @include uppercaseText;
-      color: $secondary-color;
-      text-transform: uppercase;
-
-      &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: $secondary-color;
-
-      transition: transform $transition-duration;
-      transform: scale(0);
-      transform-origin: left;
-    }
-
-      &:hover::after {
-        transform: scale(1);
-      }
+    @include onTablet {
+      flex-direction: row;
+      gap: 64px;
     }
   }
 
-  &__back-to-top {
+  &_back-to-top-block {
+    margin: 32px 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     gap: 16px;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+  }
 
-    &--text {
-      @include smallText;
-      color: $secondary-color;
+  &_back-to-top {
+    transition: 0.5s ease;
+    color: $secondary-color;
+
+    &:hover {
+      color: $primary-color;
     }
   }
-}
 
-.button-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 32px;
-  width: 32px;
-  background-color: #fff;
-  border: 1px solid $icons-color;
+  &_btn {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
 
-  &:hover {
-    border-color: $primary-color;
+  &_link {
+    color: $secondary-color;
   }
 }

@@ -1,145 +1,199 @@
-import React, { useCallback } from 'react';
-import classNames from 'classnames';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getNumbers } from '../../helpers/getNumbers';
-import { getSearchWith } from '../../helpers/getSearchWith';
-import './Pagination.scss';
+import cn from 'classnames';
 import { ICONS } from '../../icons';
+import './Pagination.scss';
 
 type Props = {
-  total: number;
-  currentPage: number;
+  totalPages: number,
+  currentPage: number,
+  perPage: string,
+  onPageChange: (page: number) => void;
 };
 
-export const Pagination: React.FC<Props> = ({ currentPage, total }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pages = getNumbers(total);
+const MAX_PAGES = 3;
 
-  const handlePreviousPage = useCallback(() => {
-    const page = +(searchParams.get('page') || 1);
+function showVisiblePages(selectedPage: number, allPages: number) {
+  const pages: number[] = [];
+  const visiblePages = selectedPage + MAX_PAGES - 1;
+  const fistPage = selectedPage - (visiblePages - allPages);
 
-    setSearchParams(
-      getSearchWith(searchParams, { page: (page - 1).toString() }),
-    );
-  }, [searchParams, setSearchParams]);
+  if (allPages <= MAX_PAGES) {
+    for (let i = 1; i <= allPages; i += 1) {
+      pages.push(i);
+    }
 
-  const handleNextPage = useCallback(() => {
-    const page = +(searchParams.get('page') || 1);
+    return pages;
+  }
 
-    setSearchParams(
-      getSearchWith(searchParams, { page: (page + 1).toString() }),
-    );
-  }, [searchParams, setSearchParams]);
+  if (visiblePages > allPages) {
+    for (let i = fistPage; i <= allPages; i += 1) {
+      pages.push(i);
+    }
+  } else {
+    for (let i = selectedPage - 1; i < visiblePages; i += 1) {
+      if (i > 0) {
+        pages.push(i);
+      }
+    }
+  }
 
-  const firstPage = 1;
-  const lastPage = pages.length;
+  return pages;
+}
 
-  const maxPages = 3;
+export const Pagination: React.FC<Props> = ({
+  totalPages,
+  currentPage,
+  perPage,
+  onPageChange,
+}) => {
+  const [searchParams] = useSearchParams();
+  const numberOfPages: number[] = showVisiblePages(currentPage, totalPages);
 
-  const startIndex = currentPage <= maxPages
-    ? 1
-    : currentPage - (maxPages - 1);
-  const lastIndex = Math.min(startIndex + maxPages, lastPage);
+  const perPageURL = searchParams.get('perPage') || '';
 
-  const dots = <div className="pagination__dots">...</div>;
+  const isFirstPage = currentPage === 1;
+
+  const isLastPage = currentPage === totalPages;
+
+  const getSearchPages = (page: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    params.set('page', page);
+    if (!perPageURL) {
+      params.set('perPage', perPage);
+    }
+
+    return params.toString();
+  };
 
   return (
     <div className="pagination">
-      <button
-        type="button"
-        data-cy="paginationLeft"
-        aria-label="prev page"
-        className="button button--prev"
-        disabled={currentPage === 1}
-        onClick={handlePreviousPage}
-      >
-        <img src={ICONS.arrowLeft} alt="button left" />
-      </button>
-
-      <ul className="pagination__list">
-        {pages.length > 2 && (
+      <ul className="pagination_list">
+        <li
+          className="page-item page-item--hide"
+        >
+          <Link
+            to={{ search: getSearchPages((currentPage - 1).toString()) }}
+            data-cy="prevLink"
+            className={cn('page-link products-slider_btn page-btns', {
+              'products-slider_btn--disabled': isFirstPage,
+            })}
+            onClick={() => !isFirstPage && onPageChange(currentPage - 1)}
+          >
+            {isFirstPage ? (
+              <img src={ICONS.arrowLeftDisabled} alt="Scroll left disabled" />
+            ) : (
+              <img src={ICONS.arrowLeft} alt="Scroll left" />
+            )}
+          </Link>
+        </li>
+        {totalPages <= MAX_PAGES ? (
           <>
-            <Link
-              to={{
-                search: getSearchWith(searchParams, {
-                  page: firstPage.toString(),
-                }),
-              }}
-              className={classNames(
-                'pagination__link', {
-                  'pagination__link--active': currentPage === firstPage,
-                },
-              )}
-            >
+            {numberOfPages.map(page => (
               <li
-                className={classNames('pagination__list-item', {
-                  'pagination__list-item--active':
-                  currentPage === firstPage,
+                className={cn('page-item', 'products-slider_btn', {
+                  'page-item--active': page === currentPage,
                 })}
+                key={page}
               >
-                {firstPage}
+                <Link
+                  data-cy="pageLink"
+                  className="page-link body-text-style"
+                  to={{ search: getSearchPages(page.toString()) }}
+                  onClick={() => onPageChange(page)}
+                >
+                  {page}
+                </Link>
               </li>
-            </Link>
-            {currentPage > 3 && dots}
+            ))}
+          </>
+        ) : (
+          <>
+            {!numberOfPages.includes(1) && (
+              <>
+                <li
+                  className={cn({
+                    'page-item': true,
+                    'products-slider_btn': true,
+                  })}
+                >
+                  <Link
+                    data-cy="pageLink"
+                    className="page-link body-text-style"
+                    to={{ search: getSearchPages('1') }}
+                    onClick={() => onPageChange(1)}
+                  >
+                    {1}
+                  </Link>
+                </li>
+                {!numberOfPages.includes(2) && (
+                  <div className="page-item body-text-style">. . .</div>
+                )}
+              </>
+            )}
+            {numberOfPages.map(page => (
+              <li
+                className={cn('page-item', 'products-slider_btn', {
+                  'page-item--active': page === currentPage,
+                })}
+                key={page}
+              >
+                <Link
+                  data-cy="pageLink"
+                  className="page-link body-text-style"
+                  to={{ search: getSearchPages(page.toString()) }}
+                  onClick={() => onPageChange(page)}
+                >
+                  {page}
+                </Link>
+              </li>
+            ))}
+            {!numberOfPages.includes(totalPages) && (
+              <>
+                <div className="page-item body-text-style">. . .</div>
+                <li
+                  className={cn({
+                    'page-item': true,
+                    'products-slider_btn': true,
+                  })}
+                >
+                  <Link
+                    data-cy="pageLink"
+                    className="page-link body-text-style"
+                    to={{ search: getSearchPages(totalPages.toString()) }}
+                    onClick={() => onPageChange(totalPages)}
+                  >
+                    {totalPages}
+                  </Link>
+                </li>
+              </>
+            )}
           </>
         )}
-
-        {pages.slice(startIndex, lastIndex).map((page) => (
+        <li
+          className="page-item page-item--hide"
+        >
           <Link
-            to={{
-              search: getSearchWith(searchParams, {
-                page: page.toString(),
-              }).toString(),
-            }}
-            key={page}
-            className={classNames('pagination__link', {
-              'pagination__link--active': currentPage === page,
-            })}
-          >
-            <li
-              className={classNames('pagination__list-item',
-                { 'pagination__list-item--active': currentPage === page })}
-            >
-              {page}
-            </li>
-          </Link>
-        ))}
-
-        {lastIndex < lastPage && dots}
-
-        {pages.length - 1 > currentPage && (
-          <Link
-            to={{
-              search: getSearchWith(searchParams, {
-                page: lastPage.toString(),
-              }),
-            }}
-            className={classNames(
-              'pagination__link', {
-                'pagination__link--active': currentPage === lastPage,
+            to={{ search: getSearchPages((currentPage + 1).toString()) }}
+            data-cy="nextLink"
+            className={cn(
+              'page-link',
+              'page-btns',
+              'products-slider_btn',
+              {
+                'products-slider_btn--disabled': isLastPage,
               },
             )}
+            onClick={() => !isLastPage && onPageChange(currentPage + 1)}
           >
-            <li
-              className={classNames('pagination__list-item',
-                { 'pagination__list-item--active': currentPage === lastPage })}
-            >
-              {lastPage}
-            </li>
+            {isLastPage ? (
+              <img src={ICONS.arrowRigntDisabled} alt="Scroll right" />
+            ) : (
+              <img src={ICONS.arrowRignt} alt="Scroll right" />
+            )}
           </Link>
-        )}
+        </li>
       </ul>
-
-      <button
-        type="button"
-        data-cy="paginationRight"
-        aria-label="next page"
-        className="button button--next"
-        disabled={currentPage === lastPage}
-        onClick={handleNextPage}
-      >
-        <img src={ICONS.arrowRight} alt="button right" />
-      </button>
     </div>
   );
 };

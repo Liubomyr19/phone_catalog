@@ -1,58 +1,51 @@
-@import '../../utils/variables.scss';
-@import '../../utils/mixins.scss';
+@import "../../utils/variables.scss";
+@import "../../utils/mixins.scss";
 
 .pagination {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  margin-top: 40px;
+  margin-bottom: 80px;
 
-  &__list {
+  &_list {
     display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
-  &__link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include bodyText;
-    color: $primary-color;
-    border: 1px solid $elements-color;
-    height: 32px;
-    width: 32px;
+}
 
-    &:hover {
-      border-color: $secondary-color;
-    }
+.page-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  color: #000;
 
-    &--active {
-      color: #fff;
-      background-color: $primary-color;
-      border-color: $primary-color;
+  &:first-child {
+    margin-right: 16px;
+  }
+
+  &:last-child {
+    margin-left: 8px;
+  }
+
+  &--active {
+    background-color: $primary-color;
+    color: #fff;
+  }
+
+  &--hide {
+    display: none;
+
+    @include onTablet {
+      display: block;
     }
   }
 }
 
-.button {
+.page-link {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 32px;
-  width: 32px;
-  border: 1px solid $icons-color;
-  background-color: #fff;
-
-  &:hover {
-    border-color: $secondary-color;
-  }
-
-  &--prev {
-    margin-right: 18px;
-  }
-
-  &--next {
-    margin-left: 18px;
-  }
+  justify-content: center;
+  color: inherit;
+  padding: 6px 9px;
 }

@@ -2,65 +2,90 @@
 @import "../../utils/mixins.scss";
 
 .header {
+  grid-area: header;
+  box-shadow: 0 1px 0 0 #e2e6e9;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 1px 0 0 $elements-color;
 
-  &__left-box {
+  &_left-box {
     display: flex;
     align-items: center;
-    margin-block: 20px;
-    margin-left: 24px;
-    gap: 64px;
+    margin: 10px 0 10px 12px;
+    gap: 32px;
 
-    &--logo {
-      display: flex;
-      align-items: center;
-      height: 24px;
-      @include hover(scale, 1.07);
+    @include onTablet {
+      margin: 10px 0 10px 24px;
+    }
+
+    @include onDesktopSm {
+      margin: 20px 0 20px 24px;
     }
   }
 
-  &__right-box {
+  &_right-box {
     display: flex;
     align-items: center;
   }
 
-  &__right-link {
-    padding: 24px;
+  &_logo {
+    height: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  &_right-links {
+    padding: 20px;
+    box-shadow: -1px 0 0 0 #e2e6e9;
     position: relative;
-    box-shadow: -1px 0 0 0 $elements-color;
-    @include hoverLink;
 
     &--active {
       position: relative;
 
       &::after {
-        content: "";
         position: absolute;
+        content: "";
         display: block;
         width: 100%;
-        height: 3px;
+        background-color: $primary-color;
+        height: 4px;
         bottom: 0;
         left: 0;
-        background-color: $primary-color;
       }
     }
 
+    @include onDesktopSm {
+      padding: 24px;
+    }
+  }
+
+  &_menu {
+    height: 24px;
+    width: 24px;
+    border: none;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../icons/icon_menu.png");
   }
 }
 
-.icon {
-  height: 16px;
-  width: 16px;
-
-  &__container {
-    position: relative;
-    height: 28px;
-    width: 28px;
+.nav {
+  &_list {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 32px;
+
+    @include onDesktopLg {
+      gap: 64px;
+    }
+  }
+
+  &_link {
+    color: $secondary-color;
+    padding: 24px 0;
+
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
 
@@ -69,29 +94,85 @@
   position: relative;
 
   &::after {
-    content: "";
     position: absolute;
-    bottom: 0;
+    content: "";
     display: block;
     width: 100%;
-    height: 3px;
     background-color: $primary-color;
+    height: 3px;
+    bottom: 0;
   }
 }
 
-.counter {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 14px;
-  width: 14px;
+.icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
 
-  font-size: 9px;
-  line-height: 12px;
-  color: #fff;
-  background-color: $red-color;
+.items-number {
+  width: 14px;
+  height: 14px;
+  text-align: center;
+  line-height: 14px;
+  border: 1px solid #fff;
   border-radius: 50%;
+  position: absolute;
+  background-color: #eb5757;
+  color: #fff;
+  font-family: Mont_semibold, sans-serif;
+  font-size: 9px;
+  top: 16px;
+  right: 18px;
+}
+
+.search {
+  height: 100%;
+  position: relative;
+
+  &_input {
+    height: 100%;
+    width: 165px;
+    padding-left: 8px;
+    outline: none;
+    border: none;
+    box-shadow: -1px 0 0 0 #e2e6e9;
+    color: $primary-color;
+
+    &:focus {
+      background-color: $hover-bg-color;
+    }
+
+    &::placeholder {
+      color: $icons-color;
+      font-size: 12px;
+
+      @include onDesktopSm {
+        font-size: 16px;
+      }
+    }
+
+    @include onTablet {
+      width: 220px;
+    }
+
+    @include onDesktopSm {
+      width: 327px;
+      padding-left: 24px;
+    }
+  }
+
+  &_clear {
+    top: 20px;
+    right: 24px;
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    background-color: transparent;
+    border: none;
+
+    @include onDesktopSm {
+      top: 24px;
+    }
+  }
 }

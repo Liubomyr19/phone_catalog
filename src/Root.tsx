@@ -1,15 +1,14 @@
-import { Route, HashRouter as Router, Routes } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
-import { HomePage } from './pages/HomePage/HomePage';
-import { PhonePage } from './pages/PhonesPage/PhonesPage';
-import { ProductDetailsPage }
-  from './pages/ProductDetailsPage/ProductDetailsPage';
-import { TabletsPage } from './pages/TabletsPage/TabletsPage';
-import { AccessoriesPage } from './pages/AccessoriesPage/AccessoriesPage';
-import { FavouritesPage } from './pages/FavouritesPage/FavouritesPage';
-import { CartPage } from './pages/CartPage/CartPage';
-import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
-import { GlobalProvider } from './components/Context/GlobalContext';
+import { HomePage } from './pages/HomePage';
+import { PhonePage } from './pages/PhonesPage';
+import { AccessoriesPage } from './pages/AccessoriesPage';
+import { TabletPage } from './pages/TabletsPage';
+import { FavoritesPage } from './pages/FavoritesPage';
+import { CartPage } from './pages/CartPage';
+import { ProductDetailsPage } from './pages/ProductDetailsPage';
+import { GlobalProvider } from './Context/GlobalContext';
+import { PageNotFound } from './pages/PageNotFound';
 
 export const Root = () => {
   return (
@@ -22,19 +21,11 @@ export const Root = () => {
               <Route index element={<PhonePage />} />
               <Route path=":productId" element={<ProductDetailsPage />} />
             </Route>
-
-            <Route path="tablets">
-              <Route index element={<TabletsPage />} />
-            </Route>
-
-            <Route path="accessories">
-              <Route index element={<AccessoriesPage />} />
-            </Route>
-
-            <Route path="favourites" element={<FavouritesPage />} />
+            <Route path="tablets" element={<TabletPage />} />
+            <Route path="accessories" element={<AccessoriesPage />} />
+            <Route path="favourites" element={<FavoritesPage />} />
             <Route path="cart" element={<CartPage />} />
-
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </GlobalProvider>
