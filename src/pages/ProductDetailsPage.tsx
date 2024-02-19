@@ -155,7 +155,7 @@ export const ProductDetailsPage = () => {
           )}
 
         </div>
-        <button type="button" className="return-back" onClick={() => navigate(-1)}>
+        <button type="button" className="return-back" onClick={() => navigate('/phones')}>
           <img src={ICONS.arrowLeft} alt="Return back" />
           <p className="return-back_text small-text-style">Back</p>
         </button>
