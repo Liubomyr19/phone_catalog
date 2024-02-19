@@ -18,7 +18,7 @@ export const Footer = () => {
         <ul className="footer_list">
           <li className="footer_item">
             <a
-              href="https://github.com/"
+              href="https://github.com/Liubomyr19"
               rel="noreferrer"
               target="_blank"
               className="footer_link uppercase-text-style"

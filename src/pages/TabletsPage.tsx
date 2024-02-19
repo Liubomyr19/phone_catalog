@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import { ICONS } from '../icons';
 import '../style/EmptyPages.scss';
 
 export const TabletPage = () => {
@@ -12,13 +11,6 @@ export const TabletPage = () => {
         <br />
         Please check back later for updates.
       </h1>
-      <div className="empty-pages_image-container">
-        <img
-          className="empty-pages_image"
-          src={ICONS.tabletsUnderConstruction}
-          alt="Tablets background page"
-        />
-      </div>
     </div>
   );
 };

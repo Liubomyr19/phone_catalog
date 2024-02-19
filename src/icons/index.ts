@@ -8,7 +8,7 @@ export const ICONS = {
   arrowRignt: require('./icon_arrow_right.svg').default,
   arrowRigntDisabled: require('./icon_arrow_right_disabled.svg').default,
   arrowUp: require('./icon_arrow_up.svg').default,
-  arrowDown: require('./icon_arrow_down.png').default,
+  arrowDown: require('./arrow-down.svg').default,
   iconClose: require('./icon_close.svg').default,
   iconPlus: require('./icon_plus.svg').default,
   iconMinus: require('./icon_minus.svg').default,
@@ -21,6 +21,4 @@ export const ICONS = {
   categoryPhones: require('./category_phones.png').default,
   categoryTablets: require('./category_tablets.png').default,
   categoryAccessories: require('./category_accessories.png').default,
-  tabletsUnderConstruction: require('./tablets_under_construction.png').default,
-  accessoriesUnderConstruction: require('./accessories_under_construction.png').default,
 };
