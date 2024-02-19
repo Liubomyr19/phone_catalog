@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable no-console */
 /* eslint-disable no-nested-ternary */
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ThreeCircles } from 'react-loader-spinner';
 import { GlobalContext } from '../Context/GlobalContext';
